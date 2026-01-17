@@ -1,0 +1,54 @@
+{
+  "barbering": [
+    {
+      "name": "Classic Haircut",
+      "description": "Precision barber cuts and fades with attention to detail",
+      "price": "$45+",
+      "duration": "30-45 min"
+    },
+    {
+      "name": "Beard Trim",
+      "description": "Professional beard shaping and grooming",
+      "price": "$25",
+      "duration": "15-20 min"
+    },
+    {
+      "name": "Hot Towel Straight Razor Shave",
+      "description": "Traditional straight razor shave experience",
+      "price": "$55+",
+      "duration": "45 min"
+    },
+    {
+      "name": "Style Change",
+      "description": "Complete transformation with consultation",
+      "price": "$60",
+      "duration": "60 min"
+    }
+  ],
+  "salon": [
+    {
+      "name": "Haircut",
+      "description": "Cut and style for all lengths and textures",
+      "price": "$60-$120",
+      "duration": "60-90 min"
+    },
+    {
+      "name": "Color Services",
+      "description": "Full color, highlights, balayage, and color correction",
+      "price": "$100/hour+",
+      "duration": "2-3 hours"
+    },
+    {
+      "name": "Blowout",
+      "description": "Professional styling and finish",
+      "price": "$35+",
+      "duration": "30 min"
+    },
+    {
+      "name": "Formal Style",
+      "description": "Special occasion hair styling",
+      "price": "$120",
+      "duration": "90 min"
+    }
+  ]
+}

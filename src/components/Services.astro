@@ -1,0 +1,70 @@
+---
+import servicesData from '../data/services.json';
+
+const { barbering, salon } = servicesData;
+---
+
+<section id="services" class="py-32 bg-[#366951]">
+  <div class="container mx-auto px-6 max-w-7xl">
+    <!-- Bold Section Header -->
+    <div class="text-center mb-24">
+      <h2 class="font-display font-black text-[clamp(2.5rem,8vw,6rem)] leading-[0.9] tracking-tighter text-[#F4F3E7] mb-6 uppercase">
+        Our Services
+      </h2>
+      <p class="text-xl text-[#F4F3E7] font-medium">
+        Premium grooming tailored to your style
+      </p>
+    </div>
+
+    <!-- Barbering Grid - Ouch Style -->
+    <div class="mb-20">
+      <h3 class="font-display font-bold text-3xl md:text-4xl text-[#F4F3E7] mb-12 uppercase tracking-tight">
+        Barbering
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {barbering.map((service) => (
+          <div class="bg-[#F4F3E7] p-8 border-2 border-[#F4F3E7] hover:bg-[#2a5240] hover:text-[#F4F3E7] transition-all duration-300 group">
+            <h4 class="font-display font-bold text-2xl mb-4 uppercase tracking-tight text-[#2a5240] group-hover:text-[#F4F3E7]">{service.name}</h4>
+            <p class="text-[#2a5240]/70 group-hover:text-[#F4F3E7]/80 text-sm mb-6 leading-relaxed">{service.description}</p>
+            <div class="flex justify-between items-end pt-4 border-t-2 border-[#2a5240]/30 group-hover:border-[#F4F3E7]/30">
+              <span class="font-black text-2xl text-[#2a5240] group-hover:text-[#F4F3E7]">{service.price}</span>
+              <span class="text-sm uppercase tracking-wider text-[#2a5240]/60 group-hover:text-[#F4F3E7]/70">{service.duration}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Salon Grid -->
+    <div>
+      <h3 class="font-display font-bold text-3xl md:text-4xl text-[#F4F3E7] mb-12 uppercase tracking-tight">
+        Salon Services
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {salon.map((service) => (
+          <div class="bg-[#F4F3E7] p-8 border-2 border-[#F4F3E7] hover:bg-[#2a5240] hover:text-[#F4F3E7] transition-all duration-300 group">
+            <h4 class="font-display font-bold text-2xl mb-4 uppercase tracking-tight text-[#2a5240] group-hover:text-[#F4F3E7]">{service.name}</h4>
+            <p class="text-[#2a5240]/70 group-hover:text-[#F4F3E7]/80 text-sm mb-6 leading-relaxed">{service.description}</p>
+            <div class="flex justify-between items-end pt-4 border-t-2 border-[#2a5240]/30 group-hover:border-[#F4F3E7]/30">
+              <span class="font-black text-2xl text-[#2a5240] group-hover:text-[#F4F3E7]">{service.price}</span>
+              <span class="text-sm uppercase tracking-wider text-[#2a5240]/60 group-hover:text-[#F4F3E7]/70">{service.duration}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-20 text-center">
+      <p class="text-lg text-[#F4F3E7] mb-8 font-medium">
+        All services include consultation to ensure you get exactly what you're looking for.
+      </p>
+      <a
+        href="#team"
+        class="inline-block bg-[#2a5240] text-[#F4F3E7] px-12 py-5 text-lg font-bold uppercase tracking-wide hover:bg-[#1a3d2f] transition-colors"
+      >
+        Book Your Appointment
+      </a>
+    </div>
+  </div>
+</section>

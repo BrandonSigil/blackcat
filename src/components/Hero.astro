@@ -1,0 +1,66 @@
+---
+import { Image } from 'astro:assets';
+import bgImage from '../images/BC-BG.webp';
+import felixLogo from '../images/Felix.svg';
+import Marquee from './Marquee.astro';
+import Header from './Header.astro';
+---
+
+<section id="home" class="relative overflow-hidden">
+  <!-- Background Image -->
+  <div class="absolute inset-0 z-0">
+    <Image
+      src={bgImage}
+      alt="Black Cat Barber Shop Interior"
+      class="w-full min-h-screen object-cover"
+      format="webp"
+      quality={85}
+    />
+  </div>
+
+  <!-- Marquee at the very top -->
+  <div class="relative z-50">
+    <Marquee />      
+  </div>
+
+  <!-- Transparent Header below marquee -->
+  <div class="relative z-40">
+    <Header />
+  </div>
+
+  <!-- Hero Content -->
+  <div class="relative z-10 flex items-center justify-center px-4 min-h-[90vh]">
+    <div class="container mx-auto max-w-7xl pb-12 md:pb-16">
+      <div class="text-center flex flex-col items-center justify-center gap-3 md:gap-4">
+        <!-- Felix Logo - Large and Responsive -->
+        <div class="flex justify-center flex-shrink-0">
+          <img src={felixLogo.src} alt="Black Cat Barber" class="w-[clamp(18rem,min(30vw,35vh),32rem)] h-auto mb-6" />
+        </div>
+
+        <!-- Bold Subheadline -->
+        <p class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-black font-semibold max-w-5xl mx-auto font-display">
+          Gig Harbor's Premier Barbershop
+        </p>
+
+        <p class="text-base sm:text-lg md:text-xl text-black max-w-2xl mx-auto font-medium">
+          Elevated experiences where high-quality services meet meaningful connections
+        </p>
+
+        <!-- Location Info - Minimal & Clean -->
+        <div class="flex flex-col sm:flex-row gap-4 md:gap-8 justify-center items-center text-black border-t border-black/30 pt-6 md:pt-8 mt-2 md:mt-4">
+          <div class="text-center sm:text-left">
+            <p class="text-sm uppercase tracking-wider text-black/70 mb-1">Location</p>
+            <p class="font-semibold text-lg">6745 Kimball Dr, Gig Harbor</p>
+          </div>
+          <div class="hidden sm:block w-px h-12 bg-black/30"></div>
+          <div class="text-center sm:text-left">
+            <p class="text-sm uppercase tracking-wider text-black/70 mb-1">Phone</p>
+            <a href="tel:+12538575064" class="font-semibold text-lg hover:text-[#366951] transition-colors">
+              (253) 857-5064
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

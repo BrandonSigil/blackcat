@@ -1,0 +1,64 @@
+{
+  "teamMembers": [
+    {
+      "id": "stewart",
+      "name": "Stewart",
+      "role": "Owner / Master Barber",
+      "bio": "Licensed since 2016 with certification from Lion's Barber Collective. Stewart founded Black Cat Barber in 2020 with a vision of creating an elevated barbershop experience. Specializes in both classic and modern styles with precision clipper and scissor work.",
+      "specialties": ["Masculine Haircuts", "Fades", "Clipper & Scissor Work", "Classic & Modern Styles"],
+      "bookingType": "glossgenius",
+      "bookingUrl": "https://stewartatblackcat.glossgenius.com",
+      "instagram": "@blackcat.barbershop",
+      "availability": "Booking 2 weeks ahead; new appointments available Sundays",
+      "image": "/src/images/team/stewart.webp"
+    },
+    {
+      "id": "tiphany",
+      "name": "Tiphany",
+      "role": "Master Barber",
+      "bio": "Cutting hair since 2011, Tiphany brings a decade of experience in traditional straight razor barber services. She works with all hair textures and lengths, creating both short and long masculine shapes with precision and care.",
+      "specialties": ["Straight Razor Services", "All Hair Textures", "Short & Long Masculine Cuts", "Traditional Barbering"],
+      "bookingType": "glossgenius",
+      "bookingUrl": "https://tiphanylopez.glossgenius.com",
+      "instagram": "",
+      "availability": "",
+      "image": "/src/images/team/tiphany.webp"
+    },
+    {
+      "id": "iyaunna",
+      "name": "Iyaunna",
+      "role": "Stylist & Barber",
+      "bio": "A versatile stylist specializing in Invisible Bead Extensions (IBE), color and balayage techniques, and both masculine and feminine cuts. Iyaunna brings creative energy and technical expertise to every service.",
+      "specialties": ["Invisible Bead Extensions (IBE)", "Color & Balayage", "Barbering", "Masculine & Feminine Cuts"],
+      "bookingType": "vagaro",
+      "bookingUrl": "https://www.vagaro.com/hairbyiyaunna",
+      "instagram": "@hairbyiyaunna",
+      "availability": "Sunday-Wednesday",
+      "image": "/src/images/team/Iyaunna.webp"
+    },
+    {
+      "id": "ashley",
+      "name": "Ashley",
+      "role": "Color Specialist & Stylist",
+      "bio": "Specializing in blonding and customized color services, Ashley creates beautiful dimensional color and layered haircuts. She also provides professional men's cuts with attention to detail and style.",
+      "specialties": ["Blonding & Custom Color", "Layered Haircuts", "Professional Men's Cuts", "Color Correction"],
+      "bookingType": "phone",
+      "phone": "510-685-0252",
+      "instagram": "@hair.by.ashleynichole",
+      "availability": "By appointment only",
+      "image": "/src/images/team/ashley.webp"
+    },
+    {
+      "id": "raul",
+      "name": "Raul",
+      "role": "Barber",
+      "bio": "Newly licensed barber bringing fresh energy and modern techniques. Specializes in fades, textured masculine styles, beard trims, and straight razor work. Available for both walk-ins and appointments.",
+      "specialties": ["Fades", "Textured Masculine Styles", "Beard Trims", "Straight Razor Work"],
+      "bookingType": "custom",
+      "bookingUrl": "https://laylowthebarbero.com",
+      "instagram": "@laylowthebarbero",
+      "availability": "Tuesday-Saturday (walk-ins and appointments)",
+      "image": "/src/images/team/raul.webp"
+    }
+  ]
+}

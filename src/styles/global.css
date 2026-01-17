@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Section scroll offset for fixed header */
+section {
+  scroll-margin-top: 80px;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #000000;
+  border: 2px solid #ffffff;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #262626;
+}
+
+/* Base typography */
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-weight: 900;
+}
+
+/* Remove default button styles */
+button {
+  border-radius: 0;
+}
+
+/* Enhance focus states for accessibility */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid #000000;
+  outline-offset: 3px;
+}
+
+/* Selection color */
+::selection {
+  background-color: #000000;
+  color: #ffffff;
+}

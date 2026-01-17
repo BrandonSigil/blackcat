@@ -1,0 +1,72 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = 'Black Cat Barber - Premier Barbershop in Gig Harbor, WA',
+  description = 'Family-owned barbershop collective in Gig Harbor. Expert barbers & stylists specializing in fades, cuts, color, and extensions. Elevated barbershop experience where high-quality services meet meaningful connections.',
+  image = '/og-image.jpg'
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en" data-theme="blackcat">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#000000" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, Astro.site)} />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans:ital,wght@0,200..900;1,200..900&family=Zalando+Sans+SemiExpanded:ital,wght@0,200..900;1,200..900&family=Zalando+Sans+Expanded:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet" />
+
+    <!-- Local Business Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "HairSalon",
+      "name": "Black Cat Barber",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "6745 Kimball Dr",
+        "addressLocality": "Gig Harbor",
+        "addressRegion": "WA",
+        "postalCode": "98335"
+      },
+      "telephone": "+1-253-857-5064",
+      "email": "barbershopblackcat@gmail.com",
+      "url": "https://blackcatbarber.com",
+      "priceRange": "$$",
+      "description": "Family-owned barbershop collective offering precision cuts, fades, color services, and extensions."
+    })} />
+  </head>
+  <body class="bg-white text-neutral-900">
+    <slot />
+  </body>
+</html>

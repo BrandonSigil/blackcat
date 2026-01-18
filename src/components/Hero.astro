@@ -37,10 +37,15 @@ import Header from './Header.astro';
           <img src={felixLogo.src} alt="Black Cat Barber" class="w-[clamp(18rem,min(30vw,35vh),32rem)] h-auto mb-6" />
         </div>
 
-        <!-- Bold Subheadline -->
-        <p class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-black font-semibold max-w-5xl mx-auto font-display">
-          Gig Harbor's Premier Barbershop
-        </p>
+        <!-- Animated Subheadline -->
+        <div class="relative text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-black font-semibold max-w-5xl mx-auto font-display overflow-hidden h-[1.2em]">
+          <p class="animated-text absolute inset-0 flex items-center justify-center" data-text="Cuts too clean">
+            Cuts too clean
+          </p>
+          <p class="animated-text absolute inset-0 flex items-center justify-center opacity-0" data-text="you'll forget your hat.">
+            you'll forget your hat.
+          </p>
+        </div>
 
         <p class="text-base sm:text-lg md:text-xl text-black max-w-2xl mx-auto font-medium">
           Elevated experiences where high-quality services meet meaningful connections
@@ -64,3 +69,71 @@ import Header from './Header.astro';
     </div>
   </div>
 </section>
+
+<style>
+  .animated-text {
+    transition: opacity 0.6s ease-in-out, clip-path 0.6s ease-in-out;
+    clip-path: inset(0 0 0 0);
+  }
+
+  .animated-text.wipe-out {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+
+  .animated-text.wipe-in {
+    animation: wipeIn 0.6s ease-in-out forwards;
+  }
+
+  @keyframes wipeIn {
+    from {
+      clip-path: inset(0 100% 0 0);
+      opacity: 0;
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  function initHeroAnimation() {
+    const texts = document.querySelectorAll<HTMLElement>('.animated-text');
+    if (texts.length !== 2) return;
+
+    let currentIndex = 0;
+
+    function switchText() {
+      const current = texts[currentIndex];
+      const next = texts[(currentIndex + 1) % texts.length];
+
+      // Wipe out current text
+      current.classList.add('wipe-out');
+
+      // After wipe out completes, wipe in next text
+      setTimeout(() => {
+        current.style.opacity = '0';
+        current.classList.remove('wipe-out');
+
+        next.classList.add('wipe-in');
+        next.style.opacity = '1';
+
+        setTimeout(() => {
+          next.classList.remove('wipe-in');
+        }, 600);
+      }, 600);
+
+      currentIndex = (currentIndex + 1) % texts.length;
+    }
+
+    // Start the animation cycle
+    setInterval(switchText, 3000);
+  }
+
+  // Initialize on page load
+  initHeroAnimation();
+
+  // Re-initialize on view transitions (if using Astro view transitions)
+  document.addEventListener('astro:page-load', initHeroAnimation);
+</script>

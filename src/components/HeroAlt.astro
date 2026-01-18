@@ -1,0 +1,199 @@
+---
+import { Image } from 'astro:assets';
+import bgImage from '../images/BlackCatBG.webp';
+import felixLogo from '../images/Felix.svg';
+import Marquee from './Marquee.astro';
+import Header from './Header.astro';
+---
+
+<section id="home" class="relative overflow-hidden min-h-screen flex flex-col">
+  <!-- Background Image -->
+  <div class="absolute inset-0 z-0">
+    <Image
+      src={bgImage}
+      alt="Black Cat Barber Shop Interior"
+      class="w-full h-full object-cover"
+      format="webp"
+      quality={85}
+    />
+  </div>
+
+  <!-- Felix Logo - Between BG and Green Overlay -->
+  <div class="absolute inset-0 z-[1] flex items-center justify-center pointer-events-none">
+    <img
+      id="felix-logo"
+      src={felixLogo.src}
+      alt="Felix the Cat"
+      class="w-[clamp(20rem,40vw,50rem)] h-auto transition-transform duration-300"
+      style="filter: brightness(0);"
+    />
+  </div>
+
+  <!-- Green Overlay that fades on scroll -->
+  <div id="green-overlay" class="absolute inset-0 z-[2] bg-[#366951] transition-opacity duration-300" style="opacity: 0.9;"></div>
+  <!-- Marquee at the very top -->
+  <div class="relative z-50">
+    <Marquee />
+  </div>
+
+  <!-- Transparent Header below marquee -->
+  <div class="relative z-40">
+    <Header />
+  </div>
+
+  <!-- Hero Content - Full Height Centered -->
+  <div class="relative z-10 flex-1 flex items-center justify-center px-4">
+    <div class="container mx-auto max-w-7xl">
+      <div class="text-center">
+        <!-- Main Headline with Animation -->
+        <div id="hero-text-container" class="relative font-display font-bold text-[clamp(3rem,12vw,10rem)] leading-[1] text-[#F4F3E7] mb-8 overflow-visible pb-8">
+          <h1 class="animated-text font-display font-bold overflow-visible" style="font-style: normal;">
+            Haircuts so clean
+          </h1>
+          <h1 class="animated-text hidden-text font-display font-bold overflow-visible" style="font-style: normal;">
+            You'll forget your hat!
+          </h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Info Bar -->
+  <div class="relative z-20 px-4 pb-8 md:pb-12">
+    <div class="container mx-auto max-w-7xl">
+      <div class="flex flex-col md:flex-row justify-between items-center md:items-end gap-6 md:gap-4 text-[#F4F3E7]">
+
+        <!-- Left: Address -->
+        <div class="text-center md:text-left order-2 md:order-1">
+          <p class="text-sm md:text-base font-medium">6745 Kimball Dr, Gig Harbor</p>
+        </div>
+
+        <!-- Center: Tagline -->
+        <div class="text-center order-1 md:order-2">
+          <p class="text-base md:text-lg font-medium max-w-md">
+            High-quality services, meaningful connections
+          </p>
+        </div>
+
+        <!-- Right: Established -->
+        <div class="text-center md:text-right order-3">
+          <p class="text-sm md:text-base font-medium">Established 2020</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #hero-text-container {
+    transition: opacity 0.3s ease-out;
+  }
+
+  .animated-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: clip-path 0.6s ease-in-out;
+    clip-path: inset(0 0 -20% 0);
+  }
+
+  .animated-text:first-child {
+    position: relative;
+  }
+
+  .animated-text.hidden-text {
+    visibility: hidden;
+  }
+
+  .animated-text.wipe-out {
+    clip-path: inset(0 100% -20% 0);
+  }
+
+  .animated-text.wipe-in {
+    clip-path: inset(0 100% -20% 0);
+    animation: wipeIn 0.6s ease-in-out forwards;
+  }
+
+  @keyframes wipeIn {
+    from {
+      clip-path: inset(0 100% -20% 0);
+    }
+    to {
+      clip-path: inset(0 0 -20% 0);
+    }
+  }
+</style>
+
+<script>
+  let currentVisibleIndex = 0;
+
+  // Text animation
+  function initHeroAnimation() {
+    const texts = document.querySelectorAll<HTMLElement>('.animated-text');
+    if (texts.length !== 2) return;
+
+    function switchText() {
+      const current = texts[currentVisibleIndex];
+      const next = texts[(currentVisibleIndex + 1) % texts.length];
+
+      // Wipe out current text
+      current.classList.add('wipe-out');
+
+      // Wait for wipe out to complete, then hide current and show next
+      setTimeout(() => {
+        // Completely hide current text first
+        current.classList.add('hidden-text');
+        current.classList.remove('wipe-out');
+
+        // Small delay to ensure current is hidden, then show next
+        requestAnimationFrame(() => {
+          next.classList.remove('hidden-text');
+          next.classList.add('wipe-in');
+          currentVisibleIndex = (currentVisibleIndex + 1) % texts.length;
+
+          setTimeout(() => {
+            next.classList.remove('wipe-in');
+          }, 600);
+        });
+      }, 600);
+    }
+
+    // Start the animation cycle
+    setInterval(switchText, 5000);
+  }
+
+  // Initialize on page load
+  initHeroAnimation();
+
+  // Scroll-based green overlay fade effect and Felix scale
+  function updateScrollEffects() {
+    const overlay = document.getElementById('green-overlay');
+    const felix = document.getElementById('felix-logo');
+    const textContainer = document.getElementById('hero-text-container');
+    if (!overlay || !felix || !textContainer) return;
+
+    const scrollY = window.scrollY;
+    const viewportHeight = window.innerHeight;
+
+    // Green overlay fade - starts at 0.9, fully transparent at 60% viewport height scrolled
+    const opacity = Math.max(0, 0.9 - (scrollY / (viewportHeight * 0.6)) * 0.9);
+    overlay.style.opacity = opacity.toString();
+
+    // Felix grows slightly as you scroll - starts at 1, grows to 1.15 (15% larger)
+    const scale = Math.min(1.15, 1 + (scrollY / (viewportHeight * 0.6)) * 0.15);
+    felix.style.transform = `scale(${scale})`;
+
+    // Text container fades out in sync with overlay - starts at 1, fully transparent at 60% viewport height
+    const textOpacity = Math.max(0, 1 - (scrollY / (viewportHeight * 0.6)));
+    textContainer.style.opacity = textOpacity.toString();
+  }
+
+  // Run on load and scroll
+  window.addEventListener('scroll', updateScrollEffects, { passive: true });
+  window.addEventListener('load', updateScrollEffects);
+
+  // Run immediately
+  updateScrollEffects();
+</script>

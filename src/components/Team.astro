@@ -1,19 +1,23 @@
 ---
 import TeamMember from './TeamMember.astro';
 import teamData from '../data/team.json';
-
+import Marquee from './Marquee.astro';
 const { teamMembers } = teamData;
 ---
 
+<>
+<div class="relative z-50">
+<Marquee/>
+</div>
 <section id="team" class="py-32 bg-white">
   <div class="container mx-auto px-6 max-w-7xl">
     <!-- Bold Section Header -->
     <div class="text-center mb-24">
       <h2 class="font-display font-black text-[clamp(2.5rem,8vw,6rem)] leading-[0.9] tracking-tighter text-[#366951] mb-6">
-        Meet Your<br>Barbers
+        Meet Our<br>Collective
       </h2>
       <p class="text-xl text-[#366951] font-medium max-w-2xl mx-auto">
-        Our talented collective bringing your vision to life
+        The crew bringing your vision to life
       </p>
     </div>
 
@@ -35,3 +39,4 @@ const { teamMembers } = teamData;
     </div>
   </div>
 </section>
+</>

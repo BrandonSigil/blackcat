@@ -1,16 +1,15 @@
 ---
 // Easy configuration
 const phrases = [
-  "NOW HIRING",
-  "JOIN OUR TEAM"
+"We're hiring! barbershopblackcat@gmail.com"
 ];
 const separator = "★";
-const spacing = 7; // Number of spaces on each side of separator
+const spacing = 25;
 
 // Build the marquee text
 const spacer = " ".repeat(spacing);
 const marqueeText = phrases.join(`${spacer}${separator}${spacer}`) + `${spacer}${separator}${spacer}`;
-const repeatedText = marqueeText.repeat(8);
+const repeatedText = marqueeText.repeat(10);
 ---
 
 <div class="marquee-wrapper">
@@ -43,7 +42,7 @@ const repeatedText = marqueeText.repeat(8);
   .marquee-banner {
     display: flex;
     overflow: hidden;
-    background-color: #DC2626;
+    background-color: #f4f3e8;
     border-radius: 100px;
     padding: 0.65rem 0;
     position: relative;
@@ -53,29 +52,15 @@ const repeatedText = marqueeText.repeat(8);
   .marquee-content {
     flex-shrink: 0;
     display: inline-block;
-    color: #000000;
-    font-family: 'DM Sans', system-ui, sans-serif;
+    color: #436853;
+    font-family: 'Zalando Sans Expanded', system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.9rem;
     letter-spacing: 0.2em;
-    text-transform: uppercase;
     white-space: nowrap;
     animation: scroll 60s linear infinite;
     padding: 0 2rem;
-    mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      black 8%,
-      black 92%,
-      transparent 100%
-    );
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      black 8%,
-      black 92%,
-      transparent 100%
-    );
+    
   }
 
   @keyframes scroll {

@@ -2,7 +2,6 @@
 import { Image } from 'astro:assets';
 import bgImage from '../images/BlackCatBG.webp';
 import felixLogo from '../images/Felix.svg';
-import Marquee from './Marquee.astro';
 import Header from './Header.astro';
 ---
 
@@ -31,10 +30,6 @@ import Header from './Header.astro';
 
   <!-- Green Overlay that fades on scroll -->
   <div id="green-overlay" class="absolute inset-0 z-[2] bg-[#366951] transition-opacity duration-300" style="opacity: 0.9;"></div>
-  <!-- Marquee at the very top -->
-  <div class="relative z-50">
-    <Marquee />
-  </div>
 
   <!-- Transparent Header below marquee -->
   <div class="relative z-40">

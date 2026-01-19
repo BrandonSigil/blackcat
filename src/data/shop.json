@@ -1,0 +1,34 @@
+{
+  "shirts": [
+    {
+      "id": "black-cat-classic",
+      "name": "Black Cat Classic",
+      "description": "Premium cotton tee featuring our signature Black Cat logo",
+      "price": "$35",
+      "gumroadUrl": "https://blackcatbarber.gumroad.com/l/classic-tee",
+      "sizes": ["S", "M", "L", "XL", "2XL"],
+      "image": "/src/images/shop/black-cat-classic.webp",
+      "bgColor": "#436852"
+    },
+    {
+      "id": "collective-vibes",
+      "name": "Vinyl Night",
+      "description": "Celebrate the craft with this exclusive design",
+      "price": "$35",
+      "gumroadUrl": "https://blackcatbarber.gumroad.com/l/collective-tee",
+      "sizes": ["S", "M", "L", "XL", "2XL"],
+      "image": "/src/images/shop/collective-vibes.webp",
+      "bgColor": "#436852"
+    },
+    {
+      "id": "scare-the-kids",
+      "name": "Scare the Kids",
+      "description": "Limited edition celebrating our Gig Harbor home",
+      "price": "$40",
+      "gumroadUrl": "https://blackcatbarber.gumroad.com/l/gig-harbor-tee",
+      "sizes": ["S", "M", "L", "XL", "2XL"],
+      "image": "/src/images/shop/gig-harbor-edition.webp",
+      "bgColor": "#436852"
+    }
+  ]
+}

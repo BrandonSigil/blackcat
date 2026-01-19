@@ -1,0 +1,89 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  shirt: {
+    id: string;
+    name: string;
+    tagline: string;
+    description: string;
+    price: string;
+    gumroadUrl: string;
+    sizes: string[];
+    image: string;
+    bgColor?: string;
+  };
+}
+
+const { shirt } = Astro.props;
+
+// Import the image dynamically
+const images = import.meta.glob('/src/images/shop/*.{png,jpg,jpeg,webp}', { eager: true });
+const imagePath = shirt.image;
+const imageModule = images[imagePath] as { default: ImageMetadata };
+---
+
+<div class="bg-white border-2 border-[#366951] transition-all duration-300 hover:shadow-xl hover:scale-[1.02] group p-8">
+  <!-- Product Image -->
+  <div class="w-full aspect-square mx-auto mb-6 overflow-hidden border-2 border-[#366951]" style={shirt.bgColor ? `background-color: ${shirt.bgColor}` : ''}>
+    {imageModule ? (
+      <Image
+        src={imageModule.default}
+        alt={shirt.name}
+        width={800}
+        height={800}
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        format="webp"
+        quality={85}
+      />
+    ) : (
+      <div class="w-full h-full bg-[#366951] flex items-center justify-center">
+        <span class="text-5xl font-display font-black text-white">{shirt.name.charAt(0)}</span>
+      </div>
+    )}
+  </div>
+
+  <!-- Product Name -->
+  <h3 class="font-heading font-bold text-3xl text-center tracking-tight mb-2 text-[#366951]">
+    {shirt.name}
+  </h3>
+
+  <!-- Tagline -->
+  <p class="text-center text-sm uppercase tracking-widest text-[#366951]/70 mb-6">
+    {shirt.tagline}
+  </p>
+
+  <!-- Description -->
+  <p class="text-[#366951]/90 mb-6 leading-relaxed text-sm">
+    {shirt.description}
+  </p>
+
+  <!-- Sizes -->
+  <div class="mb-6">
+    <p class="font-bold text-xs uppercase tracking-widest text-[#366951]/70 mb-3">
+      Available Sizes
+    </p>
+    <div class="flex flex-wrap gap-2 justify-center">
+      {shirt.sizes.map((size) => (
+        <span class="text-xs px-2 py-1 border border-[#366951] text-[#366951] uppercase tracking-wider">
+          {size}
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <!-- Price & Buy Button -->
+  <div class="mt-6 pt-6 border-t-2 border-[#366951]/20">
+    <div class="flex justify-between items-center mb-4">
+      <span class="font-black text-2xl text-[#366951]">{shirt.price}</span>
+    </div>
+    <a
+      href={shirt.gumroadUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="block w-full bg-[#366951] group-hover:bg-[#2a5240] text-white text-center px-6 py-4 font-bold uppercase tracking-wide text-sm border-2 border-[#366951] group-hover:border-[#2a5240] transition-colors"
+    >
+      Buy Now
+    </a>
+  </div>
+</div>

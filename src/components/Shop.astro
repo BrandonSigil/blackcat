@@ -1,0 +1,33 @@
+---
+import ShirtCard from './ShirtCard.astro';
+import shopData from '../data/shop.json';
+const { shirts } = shopData;
+---
+
+<section id="shop" class="py-32 bg-[#F4F3E7]">
+  <div class="container mx-auto px-6 max-w-7xl">
+    <!-- Section Header -->
+    <div class="text-center mb-24">
+      <h2 class="font-display font-black text-[clamp(2.5rem,8vw,6rem)] leading-[0.9] tracking-tighter text-[#366951] mb-6">
+        Rep The<br>Shop
+      </h2>
+      <p class="text-xl text-[#366951] font-medium max-w-2xl mx-auto">
+        Limited edition apparel from Black Cat Collective
+      </p>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {shirts.map((shirt) => (
+        <ShirtCard shirt={shirt} />
+      ))}
+    </div>
+
+    <!-- Info Callout -->
+    <div class="mt-16 max-w-3xl mx-auto text-center">
+      <p class="text-[#366951]/80 text-sm">
+        All orders printed and shipped on-demand by Printful. Please allow 7-10 business days for delivery.
+      </p>
+    </div>
+  </div>
+</section>

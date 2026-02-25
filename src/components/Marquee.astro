@@ -1,26 +1,19 @@
 ---
-// Easy configuration
-const phrases = [
-"We're hiring! barbershopblackcat@gmail.com"
-];
 const separator = "★";
 const spacing = 25;
-
-// Build the marquee text
-const spacer = " ".repeat(spacing);
-const marqueeText = phrases.join(`${spacer}${separator}${spacer}`) + `${spacer}${separator}${spacer}`;
-const repeatedText = marqueeText.repeat(10);
+const spacer = "\u00A0".repeat(spacing);
+const repeat = 10;
 ---
 
 <div class="marquee-wrapper">
   <div class="marquee-container">
     <div class="marquee-banner">
-      <div class="marquee-content">
-        {repeatedText}
-      </div>
-      <div class="marquee-content" aria-hidden="true">
-        {repeatedText}
-      </div>
+      <div class="marquee-content" set:html={Array.from({ length: repeat }, () =>
+        `We're hiring! <a href="mailto:barbershopblackcat@gmail.com" class="underline hover:text-[#2a5240]">barbershopblackcat@gmail.com</a>${spacer}${separator}${spacer}`
+      ).join("")} />
+      <div class="marquee-content" aria-hidden="true" set:html={Array.from({ length: repeat }, () =>
+        `We're hiring! <a href="mailto:barbershopblackcat@gmail.com" class="underline hover:text-[#2a5240]" tabindex="-1">barbershopblackcat@gmail.com</a>${spacer}${separator}${spacer}`
+      ).join("")} />
     </div>
   </div>
 </div>

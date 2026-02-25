@@ -39,14 +39,14 @@ section {
 
 /* Base typography */
 body {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Zalando Sans', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: 'Zalando Sans SemiExpanded', system-ui, sans-serif;
   font-weight: 900;
 }
 

@@ -2,53 +2,37 @@
   "barbering": [
     {
       "name": "Classic Haircut",
-      "description": "Precision barber cuts and fades with attention to detail",
-      "price": "$45+",
-      "duration": "30-45 min"
+      "description": "Precision men's haircuts including fades, taper fades, skin fades, crew cuts, and lineups. Our Gig Harbor barbers tailor every cut to your face shape, hair texture, and personal style."
     },
     {
       "name": "Beard Trim",
-      "description": "Professional beard shaping and grooming",
-      "price": "$25",
-      "duration": "15-20 min"
+      "description": "Professional beard shaping, trimming, and grooming. From full beards to precise neckline and cheek line detailing."
     },
     {
       "name": "Hot Towel Straight Razor Shave",
-      "description": "Traditional straight razor shave experience",
-      "price": "$55+",
-      "duration": "45 min"
+      "description": "A traditional straight razor shave with hot towel treatment for the closest, most comfortable shave. The classic barbershop luxury."
     },
     {
       "name": "Style Change",
-      "description": "Complete transformation with consultation",
-      "price": "$60",
-      "duration": "60 min"
+      "description": "Complete style consultations and transformations — from modern crops and textured styles to classic pompadours and slickbacks."
     }
   ],
   "salon": [
     {
       "name": "Haircut",
-      "description": "Cut and style for all lengths and textures",
-      "price": "$60-$120",
-      "duration": "60-90 min"
+      "description": "Expert cuts and styling for all hair lengths and textures. Whether you want a precision bob, layered cut, or a fresh trim, our Gig Harbor stylists deliver."
     },
     {
       "name": "Color Services",
-      "description": "Full color, highlights, balayage, and color correction",
-      "price": "$100/hour+",
-      "duration": "2-3 hours"
+      "description": "Full-spectrum color including balayage, highlights, lowlights, vivid color, root touch-ups, and color correction. Customized formulations for vibrant, long-lasting results."
     },
     {
       "name": "Blowout",
-      "description": "Professional styling and finish",
-      "price": "$35+",
-      "duration": "30 min"
+      "description": "Professional blowouts and styling for smooth, voluminous, salon-quality results. Perfect for a polished everyday look or a special occasion refresh."
     },
     {
       "name": "Formal Style",
-      "description": "Special occasion hair styling",
-      "price": "$120",
-      "duration": "90 min"
+      "description": "Special occasion styling including updos, bridal hair, and formal event looks. Designed to hold beautifully through the celebration."
     }
   ]
 }

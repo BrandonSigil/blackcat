@@ -23,10 +23,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalURL} />
+
+    <!-- Local SEO -->
+    <meta name="geo.region" content="US-WA" />
+    <meta name="geo.placename" content="Gig Harbor" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
     <meta name="theme-color" content="#000000" />
 
     <!-- Open Graph -->
@@ -45,13 +51,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans:ital,wght@0,200..900;1,200..900&family=Zalando+Sans+SemiExpanded:ital,wght@0,200..900;1,200..900&family=Zalando+Sans+Expanded:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans:wght@400;500;700;900&family=Zalando+Sans+SemiExpanded:wght@700;900&family=Zalando+Sans+Expanded:wght@700;900&display=swap" rel="stylesheet" />
 
     <!-- Local Business Schema -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "HairSalon",
       "name": "Black Cat Barber",
+      "image": new URL('/og-image.jpg', Astro.site).toString(),
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "6745 Kimball Dr",
@@ -59,11 +66,19 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         "addressRegion": "WA",
         "postalCode": "98335"
       },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 47.3285,
+        "longitude": -122.5902
+      },
       "telephone": "+1-253-857-5064",
       "email": "barbershopblackcat@gmail.com",
       "url": "https://blackcatbarber.com",
       "priceRange": "$$",
-      "description": "Family-owned barbershop collective offering precision cuts, fades, color services, and extensions."
+      "description": "Family-owned barbershop collective offering precision cuts, fades, color services, and extensions.",
+      "sameAs": [
+        "https://instagram.com/blackcat.barbershop"
+      ]
     })} />
   </head>
   <body class="bg-white text-neutral-900">

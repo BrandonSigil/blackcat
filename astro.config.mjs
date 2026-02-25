@@ -10,6 +10,6 @@ export default defineConfig({
   output: 'static',
   site: 'https://blackcatbarber.com',
   build: {
-    inlineStylesheets: 'auto',
+    inlineStylesheets: 'always',
   },
 });

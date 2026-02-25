@@ -48,10 +48,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL(image, Astro.site)} />
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts (non-render-blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans:wght@400;500;700;900&family=Zalando+Sans+SemiExpanded:wght@700;900&family=Zalando+Sans+Expanded:wght@700;900&display=swap" rel="stylesheet" />
+    <script is:inline>
+      var l = document.createElement('link');
+      l.rel = 'stylesheet';
+      l.href = 'https://fonts.googleapis.com/css2?family=Zalando+Sans:wght@400;500;700;900&family=Zalando+Sans+SemiExpanded:wght@700;900&family=Zalando+Sans+Expanded:wght@700;900&display=swap';
+      document.head.appendChild(l);
+    </script>
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans:wght@400;500;700;900&family=Zalando+Sans+SemiExpanded:wght@700;900&family=Zalando+Sans+Expanded:wght@700;900&display=swap" rel="stylesheet" />
+    </noscript>
 
     <!-- Analytics -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="f1d260ab-8cce-4473-8d00-b213175bf365" is:inline></script>

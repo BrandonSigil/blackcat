@@ -12,10 +12,11 @@ import Header from './Header.astro';
       src={bgImage}
       alt="Black Cat Barber Shop Interior"
       class="w-full h-full object-cover"
+      widths={[960, 1440, 1920]}
+      sizes="100vw"
       format="webp"
-      quality={85}
+      quality={60}
       loading="eager"
-      fetchpriority="high"
     />
   </div>
 
@@ -25,8 +26,11 @@ import Header from './Header.astro';
       id="felix-logo"
       src={felixLogo.src}
       alt="Felix the Cat"
+      width="640"
+      height="640"
       class="w-[clamp(20rem,40vw,50rem)] h-auto transition-transform duration-300"
       style="filter: brightness(0);"
+      fetchpriority="high"
     />
   </div>
 

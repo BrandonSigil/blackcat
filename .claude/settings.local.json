@@ -12,7 +12,8 @@
       "Bash(find:*)",
       "Bash(du:*)",
       "Bash(cwebp:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(identify /Users/brandonwirth/blackcat/src/images/BlackCatBG.webp)"
     ]
   }
 }

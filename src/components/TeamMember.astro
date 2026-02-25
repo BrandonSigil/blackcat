@@ -78,6 +78,8 @@ const imageModule = images[imagePath] as { default: ImageMetadata };
       {member.bookingType === 'phone' ? (
         <a
           href={`tel:${member.phone}`}
+          data-umami-event="booking-click"
+          data-umami-event-barber={member.name}
           class="block w-full bg-[#366951] group-hover:bg-[#2a5240] text-white text-center px-6 py-4 font-bold uppercase tracking-wide text-sm border-2 border-[#366951] group-hover:border-[#2a5240] transition-colors"
         >
           Call to Book
@@ -91,6 +93,8 @@ const imageModule = images[imagePath] as { default: ImageMetadata };
           href={member.bookingUrl}
           target="_blank"
           rel="noopener noreferrer"
+          data-umami-event="booking-click"
+          data-umami-event-barber={member.name}
           class="block w-full bg-[#366951] group-hover:bg-[#2a5240] text-white text-center px-6 py-4 font-bold uppercase tracking-wide text-sm border-2 border-[#366951] group-hover:border-[#2a5240] transition-colors"
         >
           Book with {member.name}

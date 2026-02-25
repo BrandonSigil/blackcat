@@ -1,43 +1,61 @@
-# Astro Starter Kit: Minimal
+# Black Cat Barber - Website
 
-```sh
-npm create astro@latest -- --template minimal
-```
+The official website for **Black Cat Barber**, a family-owned barbershop in Gig Harbor, WA.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Live at [blackcatbarber.com](https://blackcatbarber.com)
 
-## 🚀 Project Structure
+## What This Site Is Built With
 
-Inside of your Astro project, you'll see the following folders and files:
+- **Astro** — A modern static site generator. The site is pre-built into plain HTML/CSS/JS files, which makes it extremely fast and cheap to host.
+- **Tailwind CSS + DaisyUI** — Handles all the styling. Tailwind is a utility-based CSS framework and DaisyUI adds pre-built components on top of it.
+- **Umami** — Privacy-friendly analytics (no cookies, GDPR compliant). Tracks page views and visitor stats.
+
+## Third-Party Services
+
+- **Gumroad** — Handles merch purchases. Product links in the Shop section point to Gumroad checkout pages.
+- **Printful** — Print-on-demand fulfillment. When someone buys a shirt through Gumroad, Printful prints and ships it.
+- **Google Maps** — Embedded map on the Contact section showing the shop location.
+- **Google Fonts** — Loads the Zalando Sans font family used across the site.
+
+## Project Structure
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+├── components/    UI sections (Header, Hero, Team, Services, Shop, Contact, Footer, etc.)
+├── data/          JSON files for team members and shop products
+├── images/        Site images (backgrounds, team photos, Felix logo)
+├── layouts/       Base HTML layout (head tags, SEO, analytics)
+├── pages/         Site pages (just index.astro — it's a single-page site)
+└── styles/        Global CSS
+public/            Static files served as-is (favicon, OG image)
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## How to Run Locally
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Make sure you have [Node.js](https://nodejs.org/) installed (v18 or higher), then:
 
-Any static assets, like images, can be placed in the `public/` directory.
+```sh
+# Install dependencies
+npm install
 
-## 🧞 Commands
+# Start the dev server (opens at http://localhost:4321)
+npm run dev
+```
 
-All commands are run from the root of the project, from a terminal:
+## How to Build for Production
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```sh
+# Build the site (outputs to ./dist/)
+npm run build
 
-## 👀 Want to learn more?
+# Preview the production build locally
+npm run preview
+```
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+The `dist/` folder contains the final site files that get deployed to your hosting provider.
+
+## Updating Content
+
+- **Team members** — Edit `src/data/team.json` and add/replace photos in `src/images/team/`
+- **Shop products** — Edit `src/data/shirts.json` (or similar) and update Gumroad links
+- **General text/layout** — Edit the `.astro` files in `src/components/`

@@ -33,22 +33,6 @@
       "image": "/src/images/team/raul-green1.webp"
     },
     {
-      "id": "iyaunna",
-      "name": "Iyaunna",
-      "bio": "A versatile stylist specializing in Invisible Bead Extensions (IBE), color and balayage techniques, and both masculine and feminine cuts. Iyaunna brings creative energy and technical expertise to every service.",
-      "specialties": [
-        "Invisible Bead Extensions (IBE)",
-        "Color & Balayage",
-        "Barbering",
-        "Masculine & Feminine Cuts"
-      ],
-      "bookingType": "vagaro",
-      "bookingUrl": "https://www.vagaro.com/hairbyiyaunna",
-      "instagram": "@hairbyiyaunna",
-      "availability": "Sunday-Wednesday",
-      "image": "/src/images/team/lyaunna-green1.webp"
-    },
-    {
       "id": "ashley",
       "name": "Ashley",
       "bio": "Specializing in blonding and customized color services, Ashley creates beautiful dimensional color and layered haircuts. She also provides professional men's cuts with attention to detail and style.",

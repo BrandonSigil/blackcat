@@ -9,7 +9,7 @@ interface Props {
 
 const {
   title = 'Black Cat Barber - Premier Barbershop in Gig Harbor, WA',
-  description = 'Family-owned barbershop collective in Gig Harbor. Expert barbers & stylists specializing in fades, cuts, color, and extensions. Elevated barbershop experience where high-quality services meet meaningful connections.',
+  description = 'Family-owned barbershop collective in Gig Harbor. Expert barbers & stylists specializing in fades, cuts, color, and extensions. Spanish-speaking barber available. Elevated barbershop experience where high-quality services meet meaningful connections.',
   image = '/og-image.jpg'
 } = Astro.props;
 
@@ -86,7 +86,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       "email": "barbershopblackcat@gmail.com",
       "url": "https://blackcatbarber.com",
       "priceRange": "$$",
-      "description": "Family-owned barbershop collective offering precision cuts, fades, color services, and extensions.",
+      "description": "Family-owned barbershop collective offering precision cuts, fades, color services, and extensions. Spanish-speaking barber available.",
+      "knowsLanguage": ["en", "es"],
       "sameAs": [
         "https://instagram.com/blackcat.barbershop"
       ]

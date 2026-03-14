@@ -19,7 +19,8 @@
     {
       "id": "raul",
       "name": "Raul",
-      "bio": "Newly licensed barber bringing fresh energy and modern techniques. Specializes in fades, textured masculine styles, beard trims, and straight razor work. Available for both walk-ins and appointments.",
+      "bio": "Bilingual barber (English & Spanish) bringing fresh energy and modern techniques. Specializes in fades, textured masculine styles, beard trims, and straight razor work. Available for both walk-ins and appointments.",
+      "languages": ["English", "Spanish"],
       "specialties": [
         "Fades",
         "Textured Masculine Styles",

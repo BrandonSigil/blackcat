@@ -13,7 +13,8 @@
       "Bash(du:*)",
       "Bash(cwebp:*)",
       "Bash(grep:*)",
-      "Bash(identify /Users/brandonwirth/blackcat/src/images/BlackCatBG.webp)"
+      "Bash(identify /Users/brandonwirth/blackcat/src/images/BlackCatBG.webp)",
+      "Bash(npm run:*)"
     ]
   }
 }

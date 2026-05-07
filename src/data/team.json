@@ -54,16 +54,32 @@
       "name": "Tiphany",
       "bio": "Cutting hair since 2011, Tiphany brings a decade of experience in traditional straight razor barber services. She works with all hair textures and lengths, creating both short and long masculine shapes with precision and care.",
       "specialties": [
-        "Straight Razor Services",
-        "All Hair Textures",
+        "Straight Razor Shaves",
+        "All Hair Types",
         "Short & Long Masculine Cuts",
         "Traditional Barbering"
       ],
       "bookingType": "glossgenius",
       "bookingUrl": "https://tiphanylopez.glossgenius.com",
       "instagram": "",
-      "availability": "",
+      "availability": "Wednesday-Saturday",
       "image": "/src/images/team/tiphany-green1.webp"
+    },
+    {
+      "id": "emily",
+      "name": "Emily",
+      "bio": "A fresh face to barbering, getting licensed in 2025, Emily brings enthusiasm and attention to detail to each cut. From classic men's styles to mullets, every cut is booked with plenty of time to make sure your vision is reached.",
+      "specialties": [
+        "Classic Short Cuts",
+        "Mullets",
+        "Buzz Cuts",
+        "Beard Trims & Line Ups"
+      ],
+      "bookingType": "glossgenius",
+      "bookingUrl": "https://herbincowboicuts.glossgenius.com/",
+      "instagram": "",
+      "availability": "Friday-Sunday",
+      "image": "/src/images/team/Emily-green.jpg"
     }
   ]
 }

@@ -13,7 +13,7 @@
       "bookingType": "glossgenius",
       "bookingUrl": "https://stewartatblackcat.glossgenius.com",
       "instagram": "@blackcat.barbershop",
-      "availability": "Booking 2 weeks ahead; new appointments available Sundays",
+      "availability": "Tuesday, Wednesday, Friday, Saturday",
       "image": "/src/images/team/stew-green1.webp"
     },
     {
@@ -43,8 +43,8 @@
         "Beard Trims",
         "Straight Razor Work"
       ],
-      "bookingType": "custom",
-      "bookingUrl": "https://laylowthebarbero.com",
+      "bookingType": "glossgenius",
+      "bookingUrl": "https://raulortiz.glossgenius.com/",
       "instagram": "@laylowthebarbero",
       "availability": "Tuesday-Saturday (walk-ins and appointments)",
       "image": "/src/images/team/raul-green1.webp"

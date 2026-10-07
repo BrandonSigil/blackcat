@@ -19,7 +19,7 @@
     {
       "id": "emily",
       "name": "Emily",
-      "bio": "Emily takes the time to really listen. Not sure what you want? She'll ask the right questions, helps you figure out what you want, and takes the time to get it right. Classic cuts, buzz cuts, mullets, and beard trims, all delivered with a friendly, conversational chair-side style that keeps clients coming back.",
+      "bio": "Emily, aka the Mullet Queen, takes the time to really listen. Not sure what you want? She'll ask the right questions, helps you figure out what you want, and takes the time to get it right. Classic cuts, buzz cuts, mullets, and beard trims, all delivered with a friendly, conversational chair-side style that keeps clients coming back.",
       "specialties": [
         "Classic Short Cuts",
         "Mullets",
@@ -28,7 +28,7 @@
       ],
       "bookingType": "glossgenius",
       "bookingUrl": "https://herbincowboicuts.glossgenius.com/",
-      "instagram": "",
+      "instagram": "@herbincowboicuts",
       "availability": "Sunday, Monday, Tuesday, Wednesday, Friday",
       "image": "/src/images/team/Emily-green.jpg"
     },

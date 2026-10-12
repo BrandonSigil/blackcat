@@ -10,24 +10,32 @@ const { teamMembers } = teamData;
 <Marquee/>
 </div>
 <section id="team" class="py-32 bg-white">
+  <!-- On desktop, the heading stays with the row until the last barber is fully in view. -->
+  <div class="team-pin" data-team-pin>
+    <div class="team-pin-sticky" data-team-sticky>
+      <div class="container mx-auto px-6 max-w-7xl lg:pt-8">
+        <div class="text-center mb-16 lg:mb-10">
+          <h2 class="font-display font-black text-[clamp(2.5rem,8vw,6rem)] leading-[0.9] tracking-tighter text-[#366951] mb-6">
+            Meet Our<br>Collective
+          </h2>
+          <p class="text-xl text-[#366951] font-medium max-w-2xl mx-auto">
+            The crew bringing your vision to life
+          </p>
+        </div>
+      </div>
+      <div class="team-scroll px-6 lg:snap-x lg:snap-mandatory lg:overflow-x-auto lg:overscroll-x-contain lg:px-0 lg:pb-4" data-team-scroller>
+        <div class="team-track mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-2 lg:mx-0 lg:flex lg:w-max lg:min-w-full lg:max-w-none">
+          {teamMembers.map((member) => (
+            <div class="flex h-full min-w-0 lg:w-96 lg:min-w-96 lg:shrink-0 lg:snap-start">
+              <TeamMember member={member} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container mx-auto px-6 max-w-7xl">
-    <!-- Bold Section Header -->
-    <div class="text-center mb-24">
-      <h2 class="font-display font-black text-[clamp(2.5rem,8vw,6rem)] leading-[0.9] tracking-tighter text-[#366951] mb-6">
-        Meet Our<br>Collective
-      </h2>
-      <p class="text-xl text-[#366951] font-medium max-w-2xl mx-auto">
-        The crew bringing your vision to life
-      </p>
-    </div>
-
-    <!-- Team Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {teamMembers.map((member) => (
-        <TeamMember member={member} />
-      ))}
-    </div>
-
     <!-- Cancellation Policy Callout -->
     <div class="mt-24 max-w-3xl mx-auto">
       <div class="bg-[#366951] text-white p-12 border-4 border-[#366951]">
@@ -39,4 +47,112 @@ const { teamMembers } = teamData;
     </div>
   </div>
 </section>
+
+<script>
+  const DESKTOP_QUERY = '(min-width: 1024px)';
+
+  function initTeamScroll() {
+    const pin = document.querySelector('[data-team-pin]');
+    const sticky = document.querySelector('[data-team-sticky]');
+    const scroller = document.querySelector('[data-team-scroller]');
+    if (!pin || !sticky || !scroller || pin.dataset.bound === 'true') return;
+    pin.dataset.bound = 'true';
+
+    const desktop = window.matchMedia(DESKTOP_QUERY);
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const measure = () => {
+      const overflow = scroller.scrollWidth - scroller.clientWidth;
+      const drive = desktop.matches && !reduced.matches && overflow > 1;
+      pin.classList.toggle('is-driven', drive);
+      scroller.classList.toggle('is-driven', drive);
+      if (!drive) {
+        pin.style.height = '';
+        sticky.style.top = '';
+        scroller.scrollLeft = 0;
+        return;
+      }
+      const room = window.innerHeight - sticky.offsetHeight;
+      sticky.style.top = room > 0 ? `${Math.max(16, room / 2)}px` : '0px';
+      const runway = Math.max(overflow, window.innerHeight * 0.55);
+      pin.style.height = `${sticky.offsetHeight + runway}px`;
+    };
+
+    const sync = () => {
+      if (!pin.classList.contains('is-driven')) return;
+      const overflow = scroller.scrollWidth - scroller.clientWidth;
+      const stickyTop = parseFloat(getComputedStyle(sticky).top) || 0;
+      const range = pin.offsetHeight - sticky.offsetHeight;
+      const progress = range > 0 ? (stickyTop - pin.getBoundingClientRect().top) / range : 0;
+      scroller.scrollLeft = Math.min(1, Math.max(0, progress)) * overflow;
+    };
+
+    measure();
+    sync();
+
+    window.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', () => {
+      measure();
+      sync();
+    });
+    desktop.addEventListener('change', () => {
+      measure();
+      sync();
+    });
+    reduced.addEventListener('change', () => {
+      measure();
+      sync();
+    });
+
+    const observer = new ResizeObserver(() => {
+      measure();
+      sync();
+    });
+    observer.observe(sticky);
+    window.addEventListener('load', () => {
+      measure();
+      sync();
+    });
+  }
+
+  initTeamScroll();
+</script>
+
+<style>
+  @media (min-width: 1024px) {
+    .team-pin.is-driven .team-pin-sticky {
+      position: sticky;
+      z-index: 1;
+      background: #fff;
+    }
+
+    .team-scroll.is-driven {
+      overflow-x: hidden;
+      scroll-snap-type: none;
+    }
+
+    .team-scroll {
+      scroll-padding-left: max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem));
+      scrollbar-width: thin;
+      scrollbar-color: #366951 transparent;
+    }
+
+    .team-track {
+      padding-left: max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem));
+      padding-right: 1.5rem;
+    }
+
+    .team-scroll::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    .team-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .team-scroll::-webkit-scrollbar-thumb {
+      background: #366951;
+    }
+  }
+</style>
 </>

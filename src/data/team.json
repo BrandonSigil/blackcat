@@ -50,22 +50,6 @@
       "image": "/src/images/team/raul-green1.webp"
     },
     {
-      "id": "ashley",
-      "name": "Ashley",
-      "bio": "Specializing in blonding and customized color services, Ashley creates beautiful dimensional color and layered haircuts. She also provides professional men's cuts with attention to detail and style.",
-      "specialties": [
-        "Blonding & Custom Color",
-        "Layered Haircuts",
-        "Professional Men's Cuts",
-        "Color Correction"
-      ],
-      "bookingType": "phone",
-      "phone": "510-685-0252",
-      "instagram": "@hair.by.ashleynichole",
-      "availability": "By appointment only",
-      "image": "/src/images/team/ashley-green1.webp"
-    },
-    {
       "id": "tiphany",
       "name": "Tiphany",
       "bio": "Cutting hair since 2011, Tiphany brings a decade of experience in traditional straight razor barber services. She works with all hair textures and lengths, creating both short and long masculine shapes with precision and care.",

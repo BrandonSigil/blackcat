@@ -1,0 +1,278 @@
+{
+  "nights": [
+    {
+      "slug": "11-7-26",
+      "date": "2026-11-07",
+      "label": "11.7.26",
+      "title": "Vinyl Club",
+      "time": "6–9pm",
+      "note": "With special guest Bread Truck Records.",
+      "spotifyPlaylistId": "3bluaQhb1fI4Ko51mZgQod",
+      "colors": [
+        "#f6f2e6",
+        "#333333",
+        "#c8643b"
+      ],
+      "artifacts": [
+        {
+          "type": "photo",
+          "src": "/vinyl-night/11-7-26/flyer.png",
+          "alt": "Black Cat Vinyl Club flyer, Nov 7, 6–9pm, 6745 Kimball, with special guest Bread Truck Records",
+          "caption": "The flyer"
+        },
+        {
+          "type": "video",
+          "src": "/vinyl-night/11-7-26/reel.mp4",
+          "poster": "/vinyl-night/11-7-26/reel.jpg",
+          "url": "https://www.instagram.com/reel/DfgKlPaO4HN/",
+          "caption": "Via @breadtruckrecords"
+        },
+        {
+          "type": "photo",
+          "src": "/vinyl-night/11-7-26/birthday.jpg",
+          "alt": "Two friends laughing in the shop while one holds a birthday cake lit with a sparkler",
+          "caption": "Lil' Stews Big Birthday!"
+        }
+      ],
+      "tracks": [
+        {
+          "title": "Atomic Number",
+          "artist": "case/lang/veirs",
+          "length": "2:58",
+          "spotifyId": "6dA9wLJzLDS3Vfk7m3qIPI"
+        },
+        {
+          "title": "Honey and Smoke",
+          "artist": "case/lang/veirs",
+          "length": "3:04",
+          "spotifyId": "5YNnOVlJvpIAzqbOusMQdI"
+        },
+        {
+          "title": "Ocarina of Time",
+          "artist": "The Deku Trio",
+          "length": "2:49",
+          "spotifyId": "4Dev8ZLHhv6WXT1ScYzPDI"
+        },
+        {
+          "title": "Song of Storms",
+          "artist": "The Deku Trio",
+          "length": "2:13",
+          "spotifyId": "5Y86xRnUNhw41lMuIj0yw9"
+        },
+        {
+          "title": "Palace of Illusions",
+          "artist": "Menahan Street Band",
+          "length": "2:42",
+          "spotifyId": "6IkiCMtbU5DvmFNDwz7nZ6"
+        },
+        {
+          "title": "Love Takes Miles",
+          "artist": "Cameron Winter",
+          "length": "3:18",
+          "spotifyId": "2zf1izCOz2F22PF27uhxRF"
+        },
+        {
+          "title": "Cancer of the Skull",
+          "artist": "Cameron Winter",
+          "length": "5:31",
+          "spotifyId": "1RkuN09alt0DLZ9PlplUcc"
+        },
+        {
+          "title": "Cutting My Fingers Off",
+          "artist": "Turnover",
+          "length": "3:16",
+          "spotifyId": "0Wl2RALqRacaIJhnlRHK8J"
+        },
+        {
+          "title": "Blue in the Dark",
+          "artist": "Bearings",
+          "length": "3:58",
+          "spotifyId": "0px9k0IjNpRIqHG7R1Q9Dl"
+        },
+        {
+          "title": "Chicken Fat",
+          "artist": "Mel Brown",
+          "length": "4:14",
+          "spotifyId": "0u6bZc8NhpSbH2KutleBQx"
+        },
+        {
+          "title": "Chinatown",
+          "artist": "Destroyer",
+          "length": "3:49",
+          "spotifyId": "1xVJh5Aqq4YqPzdtUdO5K7"
+        },
+        {
+          "title": "Tossed Away",
+          "artist": "Nourished by Time",
+          "length": "4:50",
+          "spotifyId": "7vNMpCeU4hQSU94pdcmdr0"
+        },
+        {
+          "title": "Automatic Love",
+          "artist": "Nourished by Time",
+          "length": "4:02",
+          "spotifyId": "6TLEg0rUFLH0EF9CYfRJ7B"
+        },
+        {
+          "title": "Shanty",
+          "artist": "Slowdive",
+          "length": "5:48",
+          "spotifyId": "54WY673q0m0Keh3VH92Fz6"
+        },
+        {
+          "title": "All Is One",
+          "artist": "Balthvs",
+          "length": "3:51",
+          "spotifyId": "1WSHM20IR1bliV1jzEPZyK"
+        },
+        {
+          "title": "Come Back to Me",
+          "artist": "Jungle",
+          "length": "3:05",
+          "spotifyId": "0BnugXqRqfNqBSDHFyTVQn"
+        },
+        {
+          "title": "Sunshine",
+          "artist": "Jungle",
+          "length": "3:11",
+          "spotifyId": "07lwMZLo0Nxc01nMXuiVL8"
+        },
+        {
+          "title": "Colors",
+          "artist": "The Tallest Man on Earth",
+          "length": "5:15",
+          "spotifyId": "2EKquExEvSDLwNCxUb1GSp"
+        },
+        {
+          "title": "Just Beyond Endless Mountain",
+          "artist": "The Tallest Man on Earth",
+          "length": "4:05",
+          "spotifyId": "436wTTcKd4gyjPvln4XFbo"
+        },
+        {
+          "title": "Amami",
+          "artist": "Yussef Dayes",
+          "length": "5:24",
+          "spotifyId": "4LgM9jizqppslT1cYDeUZT"
+        },
+        {
+          "title": "Turquoise Galaxy",
+          "artist": "Yussef Dayes",
+          "length": "3:12",
+          "spotifyId": "443JNQpv6lz4wxnHZKV7wH"
+        },
+        {
+          "title": "Ojos Verdes",
+          "artist": "Balthvs",
+          "length": "3:42",
+          "spotifyId": "5FAl6o2HghVQ1TqEfmXsj4"
+        },
+        {
+          "title": "I Knew How It Would Feel to Be Free",
+          "artist": "Cold Blood",
+          "length": "5:59",
+          "spotifyId": "7jLxRT1DuE6J4MHSnfv11r"
+        },
+        {
+          "title": "Something Someone Said",
+          "artist": "The Thrill",
+          "length": "4:21",
+          "spotifyId": "6Ed4uAuUwRjaoO2roZNC2C"
+        },
+        {
+          "title": "The Royal Scam",
+          "artist": "Steely Dan",
+          "length": "6:32",
+          "spotifyId": "0KPoWQTvcwpaDUKcjSaYKF"
+        }
+      ]
+    },
+    {
+      "slug": "8-22-26",
+      "date": "2026-08-22",
+      "label": "8.22.26",
+      "title": "Vinyl Club",
+      "time": "6–9pm",
+      "colors": [
+        "#3ba7c4",
+        "#fbd98a",
+        "#f6f2e6"
+      ],
+      "artifacts": [
+        {
+          "type": "photo",
+          "src": "/vinyl-night/8-22-26/flyer.jpg",
+          "alt": "Black Cat Vinyl Club flyer over pool water, August 22, 6–9pm, 6745 Kimball Dr",
+          "caption": "The flyer"
+        }
+      ],
+      "tracks": []
+    },
+    {
+      "slug": "4-18-26",
+      "date": "2026-04-18",
+      "label": "4.18.26",
+      "title": "Vinyl Club",
+      "time": "4–6pm",
+      "note": "Record Store Day.",
+      "colors": [
+        "#c25e47",
+        "#f6f2e6",
+        "#333333"
+      ],
+      "artifacts": [
+        {
+          "type": "photo",
+          "src": "/vinyl-night/4-18-26/flyer.png",
+          "alt": "Black Cat Vinyl Club flyer, April 18, 4–6pm, 6745 Kimball, Record Store Day",
+          "caption": "The flyer"
+        }
+      ],
+      "tracks": []
+    },
+    {
+      "slug": "3-20-26",
+      "date": "2026-03-20",
+      "label": "3.20.26",
+      "title": "Vinyl Club",
+      "time": "8–10pm",
+      "note": "“The Strokes killed nu-metal.”",
+      "colors": [
+        "#333333",
+        "#f6f2e6",
+        "#fbd98a"
+      ],
+      "artifacts": [
+        {
+          "type": "photo",
+          "src": "/vinyl-night/3-20-26/flyer.png",
+          "alt": "Black Cat Vinyl Club flyer, March 20, 8–10pm, 6745 Kimball Dr",
+          "caption": "The flyer"
+        }
+      ],
+      "tracks": []
+    },
+    {
+      "slug": "4-24-25",
+      "date": "2025-04-24",
+      "label": "4.24.25",
+      "title": "Vinyl Night",
+      "time": "6–8pm",
+      "note": "Beer + snacks. Bring your Record Store Day finds. An evening of sharing music and storytelling.",
+      "colors": [
+        "#e2dcd0",
+        "#2f8a4a",
+        "#1f1f1f"
+      ],
+      "artifacts": [
+        {
+          "type": "photo",
+          "src": "/vinyl-night/4-24-25/flyer.jpg",
+          "alt": "Black Cat Collective Vinyl Night flyer, April 24 2025, 6–8pm, beer and snacks",
+          "caption": "The flyer"
+        }
+      ],
+      "tracks": []
+    }
+  ]
+}

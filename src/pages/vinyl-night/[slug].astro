@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import VinylNight from '../../components/VinylNight.astro';
+import data from '../../data/vinyl-nights.json';
+
+export function getStaticPaths() {
+  return data.nights.map((night) => ({ params: { slug: night.slug }, props: { night } }));
+}
+
+const { night } = Astro.props;
+---
+
+<Layout
+  title={`Vinyl Night ${night.label} Playlist - Black Cat Barber`}
+  description={night.tracks.length
+    ? `Every song we spun at Black Cat Barber's Vinyl Night on ${night.label}. ${night.tracks.length} tracks, playable on Spotify, Apple Music, YouTube Music, Tidal and Amazon Music.`
+    : `The flyer and photos from Black Cat Barber's ${night.title ?? 'Vinyl Night'} on ${night.label} in Gig Harbor.`}
+>
+  <main>
+    <VinylNight nights={data.nights} openSlug={night.slug} />
+  </main>
+</Layout>

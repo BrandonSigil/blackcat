@@ -1,0 +1,140 @@
+---
+interface Props {
+  month: string;
+  year: string;
+  vol: string;
+  title: string;
+  foot: string;
+  palette: string[];
+}
+
+const { month, year, vol, title, foot, palette } = Astro.props;
+const [bg, fg, accent] = palette;
+
+// Shrink long months so "September" still fits on one line.
+const dateSize = Math.min(17, 84 / (month.length * 0.86)).toFixed(2);
+---
+
+<span class="cover" style={`--bg:${bg};--fg:${fg};--accent:${accent};--date-size:${dateSize}cqw`}>
+  <span class="cover-rings" aria-hidden="true"></span>
+  <span class="cover-in">
+    <span class="cover-row">
+      <span>Black Cat Barber</span>
+      <span>Vol. {vol}</span>
+    </span>
+    <span class="cover-main">
+      <span class="cover-title">{title}</span>
+      <span class="cover-date">{month}<br />{year}</span>
+    </span>
+    <span class="cover-row">
+      <span>{foot}</span>
+      <span>33⅓ rpm</span>
+    </span>
+  </span>
+  <span class="cover-sticker" aria-hidden="true">BYO<br />record</span>
+</span>
+
+<style>
+  .cover {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    container-type: inline-size;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Courier Prime', 'Courier New', ui-monospace, monospace;
+    text-align: left;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Ring wear: the pale circle a record leaves after years in its sleeve. */
+  .cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      circle at 50% 50%,
+      transparent 44%,
+      rgba(255, 255, 255, 0.13) 45.5%,
+      transparent 48.5%
+    );
+  }
+
+  .cover-rings {
+    position: absolute;
+    right: -55cqw;
+    bottom: -55cqw;
+    width: 120cqw;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: repeating-radial-gradient(
+      circle,
+      transparent 0 3.2cqw,
+      color-mix(in srgb, var(--fg) 22%, transparent) 3.2cqw 3.6cqw
+    );
+  }
+
+  .cover-in {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 6cqw;
+  }
+
+  .cover-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+    font-size: max(9px, 3.2cqw);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .cover-main {
+    display: block;
+  }
+
+  .cover-title,
+  .cover-date {
+    display: block;
+    font-family: 'Zalando Sans Expanded', system-ui, sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .cover-title {
+    font-size: 6.4cqw;
+    letter-spacing: 0.02em;
+  }
+
+  .cover-date {
+    margin-top: 1cqw;
+    font-size: var(--date-size);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+  }
+
+  .cover-sticker {
+    position: absolute;
+    right: 6cqw;
+    bottom: 14cqw;
+    display: grid;
+    place-items: center;
+    width: 17cqw;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--bg);
+    font-size: 3cqw;
+    font-weight: 700;
+    line-height: 1.05;
+    text-align: center;
+    text-transform: uppercase;
+    rotate: 12deg;
+  }
+</style>

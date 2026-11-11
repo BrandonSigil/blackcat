@@ -1,0 +1,14 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import VinylNight from '../../components/VinylNight.astro';
+import data from '../../data/vinyl-nights.json';
+---
+
+<Layout
+  title="Vinyl Night - Black Cat Barber"
+  description="Every Vinyl Night at Black Cat Barber in Gig Harbor: the full setlists, playable on Spotify, Apple Music, YouTube Music, Tidal and Amazon Music, plus photos from each night."
+>
+  <main>
+    <VinylNight nights={data.nights} />
+  </main>
+</Layout>

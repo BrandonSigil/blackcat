@@ -219,6 +219,10 @@ const nextVol = pad(records.length + 1);
         </span>
       </a>
 
+      <p class="crate-hint" data-hint aria-hidden="true">
+        <span class="hint-touch">(swipe to dig · tap to open)</span>
+        <span class="hint-mouse">(scroll to dig · click to open)</span>
+      </p>
     </div>
 
     {records.map((r, i) => {
@@ -469,7 +473,29 @@ const nextVol = pad(records.length + 1);
     const floor = stage.querySelector<HTMLElement>('[data-floor]')!;
     const crate = stage.querySelector<HTMLElement>('[data-crate]')!;
 
+    const hint = stage.querySelector<HTMLElement>('[data-hint]');
+
     const animated = () => !reduce.matches && !flat.matches;
+
+    // Videos only run while their night is open and they are on screen, so a phone
+    // doesn't pull the reel down before anyone scrolls to it.
+    const inView = new Set<HTMLVideoElement>();
+    function syncVideo(video: HTMLVideoElement) {
+      const live = inView.has(video) && !!video.closest('.gatefold')?.classList.contains('is-spilled');
+      if (live) video.play().catch(() => {});
+      else video.pause();
+    }
+    const watcher = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => {
+          const video = entry.target as HTMLVideoElement;
+          if (entry.isIntersecting) inView.add(video);
+          else inView.delete(video);
+          syncVideo(video);
+        }),
+      { threshold: 0.2 },
+    );
+    stage.querySelectorAll<HTMLVideoElement>('[data-video]').forEach((video) => watcher.observe(video));
 
     function renderCrate() {
       sleeves.forEach((sleeve, i) => {
@@ -520,9 +546,7 @@ const nextVol = pad(records.length + 1);
     function spill(fold: HTMLElement) {
       void fold.offsetWidth;
       fold.classList.add('is-spilled');
-      fold.querySelectorAll<HTMLVideoElement>('[data-video]').forEach((video) => {
-        video.play().catch(() => {});
-      });
+      fold.querySelectorAll<HTMLVideoElement>('[data-video]').forEach(syncVideo);
     }
 
     stage.addEventListener('click', (event) => {
@@ -539,6 +563,7 @@ const nextVol = pad(records.length + 1);
 
     function open(i: number, { push = true, animate = animated() } = {}) {
       if (openIndex === i) return;
+      hint?.classList.add('is-used');
       if (openIndex >= 0) unmount(openIndex);
       unmount(i);
 
@@ -609,6 +634,7 @@ const nextVol = pad(records.length + 1);
 
     function step(dir: 1 | -1) {
       if (total < 2) return;
+      hint?.classList.add('is-used');
       const next = (current + dir + total) % total;
       if (openIndex >= 0) {
         open(next, { animate: false, push: true });
@@ -668,21 +694,33 @@ const nextVol = pad(records.length + 1);
       { passive: false },
     );
 
-    let touchY: number | null = null;
-    crate.addEventListener('touchstart', (event) => (touchY = event.touches[0].clientY), { passive: true });
+    // Swipe the stack up or sideways to flick to the next record, down or back for the last one.
+    let touchStart: { x: number; y: number } | null = null;
+    let swipedAt = 0;
+    crate.addEventListener(
+      'touchstart',
+      (event) => (touchStart = { x: event.touches[0].clientX, y: event.touches[0].clientY }),
+      { passive: true },
+    );
     crate.addEventListener(
       'touchend',
       (event) => {
-        if (touchY === null) return;
-        const dy = touchY - event.changedTouches[0].clientY;
-        touchY = null;
-        if (Math.abs(dy) > 40) step(dy > 0 ? 1 : -1);
+        if (!touchStart) return;
+        const dx = touchStart.x - event.changedTouches[0].clientX;
+        const dy = touchStart.y - event.changedTouches[0].clientY;
+        touchStart = null;
+        const d = Math.abs(dx) > Math.abs(dy) ? dx : dy;
+        if (Math.abs(d) < 40) return;
+        swipedAt = performance.now();
+        step(d > 0 ? 1 : -1);
       },
       { passive: true },
     );
 
     sleeves.forEach((sleeve, i) =>
       sleeve.addEventListener('click', () => {
+        // A swipe that ends on a sleeve shouldn't also open it.
+        if (performance.now() - swipedAt < 400) return;
         if (order[0] === i) open(i);
         else {
           bringToTop(i);
@@ -827,10 +865,18 @@ const nextVol = pad(records.length + 1);
     const grip = menu.querySelector<HTMLElement>('[data-menu-grip]')!;
     const fold = menu.querySelector<HTMLButtonElement>('[data-menu-fold]')!;
     const saved = JSON.parse(sessionStorage.getItem(MENU_KEY) ?? 'null') as { x: number; y: number; folded: boolean } | null;
+    // On a phone the card is docked along the bottom edge: it starts folded and doesn't drag.
+    const phone = window.matchMedia('(max-width: 767.98px), (max-height: 520px)');
     let x = saved?.x ?? 0;
     let y = saved?.y ?? 0;
 
+    // The open spread leaves this much room at the bottom so nothing ends up stuck under the card.
+    const measure = () => stage.style.setProperty('--menu-h', `${menu.offsetHeight}px`);
+    new ResizeObserver(measure).observe(menu);
+
     function place() {
+      measure();
+      if (phone.matches) return;
       const { offsetLeft: left, offsetTop: top, offsetWidth: w, offsetHeight: h } = menu;
       x = Math.min(Math.max(x, 8 - left), stage.clientWidth - 8 - w - left);
       y = Math.min(Math.max(y, 8 - top), stage.clientHeight - 8 - h - top);
@@ -850,7 +896,7 @@ const nextVol = pad(records.length + 1);
       place();
     }
 
-    let preferFolded = saved?.folded ?? false;
+    let preferFolded = saved?.folded ?? phone.matches;
     setFolded(preferFolded);
     fold.addEventListener('click', () => {
       preferFolded = !menu.classList.contains('is-folded');
@@ -866,7 +912,7 @@ const nextVol = pad(records.length + 1);
 
     menu.addEventListener('pointerdown', (event) => {
       const target = event.target as HTMLElement;
-      if (event.button !== 0 || target.closest('a, button')) return;
+      if (phone.matches || event.button !== 0 || target.closest('a, button')) return;
       if (event.pointerType !== 'mouse' && !grip.contains(target)) return;
       dragging = true;
       startX = event.clientX;
@@ -1131,12 +1177,91 @@ const nextVol = pad(records.length + 1);
     display: none;
   }
 
-  @media (max-width: 767.98px) {
+  /* Phones, either way up: the card docks along the bottom as one row of big buttons. (+) unfolds the links. */
+  @media (max-width: 767.98px), (max-height: 520px) {
     .menu-card {
       left: 0.75rem;
-      bottom: 0.75rem;
-      width: min(21rem, calc(100vw - 1.5rem));
+      right: 0.75rem;
+      bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+      width: auto;
       font-size: 12px;
+      transform: rotate(-0.6deg);
+      touch-action: manipulation;
+    }
+
+    .menu-tab {
+      width: 62%;
+      padding-block: 0;
+      cursor: default;
+    }
+
+    .menu-tab .paren-btn {
+      min-width: 2.75rem;
+      min-height: 2.25rem;
+      margin-right: -0.75rem;
+      font-size: 16px;
+    }
+
+    .menu-body {
+      grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+      gap: 0.45rem;
+      padding: 0.55rem 0.6rem 0.65rem;
+      background: var(--cream);
+      cursor: default;
+    }
+
+    .menu-night {
+      display: contents;
+    }
+
+    .menu-night span {
+      grid-area: 1 / 1 / 2 / -1;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .menu-night .paren-btn {
+      grid-row: 2;
+      min-height: 2.75rem;
+      border: 1px dashed rgba(31, 61, 48, 0.35);
+      background: rgba(255, 255, 255, 0.55);
+      font-size: 18px;
+    }
+
+    .menu-night [data-prev] {
+      grid-column: 1;
+    }
+
+    .menu-night [data-next] {
+      grid-column: 3;
+    }
+
+    .menu-primary {
+      grid-area: 2 / 2;
+    }
+
+    .menu-brand,
+    .menu-links {
+      grid-column: 1 / -1;
+    }
+
+    .menu-brand {
+      align-items: center;
+      min-height: 2.75rem;
+      margin-top: 0.2rem;
+      border-top: 1px dashed rgba(31, 61, 48, 0.35);
+    }
+
+    .menu-links {
+      gap: 0 0.9rem;
+      font-size: 13px;
+    }
+
+    .menu-links a {
+      display: flex;
+      align-items: center;
+      gap: 0.4em;
+      min-height: 2.75rem;
     }
   }
 
@@ -1308,16 +1433,6 @@ const nextVol = pad(records.length + 1);
     }
   }
 
-  @media (max-width: 767.98px) {
-    .merch-tag {
-      left: -140%;
-      bottom: 18%;
-      width: 9.5rem;
-      font-size: 9px;
-      rotate: -5deg;
-    }
-  }
-
   .merch :global(img) {
     display: block;
     width: 100%;
@@ -1348,6 +1463,20 @@ const nextVol = pad(records.length + 1);
 
   .merch-tag:hover {
     rotate: -6deg;
+  }
+
+  @media (max-width: 767.98px) {
+    .merch {
+      bottom: calc(var(--menu-h, 7.5rem) + 1.4rem);
+    }
+
+    .merch-tag {
+      left: -56%;
+      bottom: -18%;
+      width: 8.75rem;
+      font-size: 9px;
+      rotate: -5deg;
+    }
   }
 
   .merch-tag-hole {
@@ -1387,6 +1516,10 @@ const nextVol = pad(records.length + 1);
   }
 
   .crate {
+    --s: min(28rem, 74vw, calc(100svh - 17rem));
+    --cx: calc(50% - 2.5rem);
+    --cy: calc(50% + 2.5rem);
+
     position: absolute;
     inset: 0;
     touch-action: none;
@@ -1402,13 +1535,12 @@ const nextVol = pad(records.length + 1);
   }
 
   .sleeve {
-    --s: min(28rem, 74vw, calc(100svh - 17rem));
     --fan-x: 10px;
     --fan-y: -11px;
 
     position: absolute;
-    left: calc(50% - 2.5rem);
-    top: calc(50% + 2.5rem);
+    left: var(--cx);
+    top: var(--cy);
     display: block;
     width: var(--s);
     aspect-ratio: 1;
@@ -1422,6 +1554,56 @@ const nextVol = pad(records.length + 1);
     transition:
       transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
       opacity 0.26s;
+  }
+
+  /* Phones: the stack sits in the room above the docked menu. */
+  @media (max-width: 767.98px) {
+    .crate {
+      --s: min(74vw, calc(100svh - 19rem));
+      --cy: calc(50% + 1rem);
+    }
+  }
+
+  /* How to work the crate, written under the stack until the first flick. */
+  .crate-hint {
+    position: absolute;
+    left: var(--cx);
+    top: calc(var(--cy) + var(--s) / 2 + 0.8rem);
+    translate: -50% 0;
+    color: rgba(244, 243, 231, 0.75);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: opacity 0.5s;
+  }
+
+  .crate-hint.is-used {
+    opacity: 0;
+  }
+
+  .hint-touch {
+    display: none;
+  }
+
+  @media (hover: none) {
+    .hint-touch {
+      display: inline;
+    }
+
+    .hint-mouse {
+      display: none;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .crate-hint {
+      left: calc(var(--cx) - var(--s) / 2);
+      translate: none;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+    }
   }
 
   .sleeve > :global(.cover) {
@@ -2146,9 +2328,10 @@ const nextVol = pad(records.length + 1);
 
   @media (max-width: 1023.98px) {
     .stage[data-open] .floor {
+      overflow-x: hidden;
       overflow-y: auto;
       overscroll-behavior: contain;
-      padding-bottom: 8rem;
+      padding-bottom: calc(var(--menu-h, 8rem) + 2.5rem);
     }
 
     .stage[data-open] .crate {
@@ -2173,9 +2356,9 @@ const nextVol = pad(records.length + 1);
       transform: none !important;
     }
 
+    /* Liner notes lead, so the night's name and date are the first thing on screen. */
     .gf-leaf {
       position: static;
-      order: -1;
       transform: none !important;
     }
 
@@ -2188,8 +2371,10 @@ const nextVol = pad(records.length + 1);
       transform: none !important;
     }
 
+    /* Relative, so the panel still clips its ring artwork. */
     .gf-right {
-      position: static;
+      position: relative;
+      inset: auto;
     }
 
     .tracklist,
@@ -2217,8 +2402,21 @@ const nextVol = pad(records.length + 1);
       width: auto;
       opacity: 1;
       pointer-events: auto;
-      transform: rotate(var(--r, 0deg)) !important;
+      transform: rotate(calc(var(--r, 0deg) * 0.35)) !important;
       transition: none;
+    }
+
+    .spill .artifact-video {
+      justify-self: center;
+      width: min(100%, 17rem);
+    }
+
+    .lightbox-close {
+      top: 0.4rem;
+      right: 0.4rem;
+      min-width: 2.75rem;
+      min-height: 2.75rem;
+      font-size: 18px;
     }
 
     .spill .artifact-record {
@@ -2229,9 +2427,103 @@ const nextVol = pad(records.length + 1);
     }
   }
 
-  @media (max-width: 479.98px) {
+  /* Phones: every row is a thumb-sized target and long titles wrap instead of cutting off. */
+  @media (max-width: 767.98px) {
+    .tl-head,
+    .tl-head-actions {
+      align-items: center;
+    }
+
+    .tl-head {
+      padding-block: 0.25rem;
+      padding-right: 0.25rem;
+    }
+
+    .tl-head-actions {
+      gap: 0.25rem;
+    }
+
+    .tl-head-actions a,
+    .tl-head-actions .paren-btn {
+      display: grid;
+      place-items: center;
+      min-width: 2.75rem;
+      min-height: 2.75rem;
+    }
+
+    .tl-head-actions .paren-btn {
+      font-size: 16px;
+    }
+
+    .tl-side {
+      padding-inline: 0.85rem;
+    }
+
     .tl-row {
-      padding-inline: 0.75rem;
+      grid-template-columns: 2.75rem minmax(0, 1fr) auto 2.75rem;
+      align-items: center;
+      column-gap: 0.3rem;
+      padding: 0 0.15rem;
+      font-size: 13px;
+    }
+
+    .tl-play,
+    .tl-row > .paren-btn {
+      display: grid;
+      place-items: center;
+      min-height: 2.75rem;
+    }
+
+    .tl-text {
+      padding-block: 0.3rem;
+      line-height: 1.25;
+      white-space: normal;
+    }
+
+    .tl-title,
+    .tl-artist {
+      display: block;
+    }
+
+    .tl-artist {
+      margin-left: 0;
+      font-size: 12px;
+    }
+
+    .tl-links {
+      gap: 0.4rem;
+      padding: 0 0 0.6rem;
+    }
+
+    .tl-links a {
+      padding: 0.55rem 0.65rem;
+      font-size: 11px;
+    }
+  }
+
+  /* A phone on its side: menu in the corner, the stack gets the full height. */
+  @media (max-height: 520px) and (orientation: landscape) {
+    .menu-card {
+      right: auto;
+      width: 17rem;
+    }
+
+    .crate {
+      --s: min(26rem, calc(100svh - 3.5rem));
+      --cx: calc(50% + 4rem);
+      --cy: 52%;
+    }
+
+    .crate-hint {
+      display: none;
+    }
+
+    .backdrop-meta {
+      top: 0.75rem;
+    }
+
+    .merch {
+      bottom: 1rem;
     }
   }
 

@@ -31,6 +31,8 @@ interface Night {
   /** Sleeve colors as [background, ink, accent], usually pulled from the night's flyer. */
   colors?: string[];
   spotifyPlaylistId?: string;
+  /** Older nights we only kept the flyer for: the sleeve shows the poster instead of opening. */
+  posterOnly?: boolean;
   tracks: Track[];
   artifacts?: Artifact[];
 }
@@ -120,6 +122,7 @@ const records = [...nights]
     year: night.date.slice(0, 4),
     sideASize: Math.ceil(night.tracks.length / 2),
     artifacts: night.artifacts ?? [],
+    poster: night.artifacts?.find((a) => a.type === 'photo' && a.src),
     title: night.title ?? 'Vinyl Night',
     playlistUrl: night.spotifyPlaylistId && `https://open.spotify.com/playlist/${night.spotifyPlaylistId}`,
     embedUrl: night.spotifyPlaylistId && `https://open.spotify.com/embed/playlist/${night.spotifyPlaylistId}?theme=0`,
@@ -130,8 +133,10 @@ const records = [...nights]
   }))
   .reverse();
 
-const openIndex = openSlug ? records.findIndex((r) => r.slug === openSlug) : -1;
-const current = Math.max(openIndex, 0);
+const slugIndex = openSlug ? records.findIndex((r) => r.slug === openSlug) : -1;
+const current = Math.max(slugIndex, 0);
+const openIndex = slugIndex >= 0 && !records[slugIndex].posterOnly ? slugIndex : -1;
+const posterSlug = slugIndex >= 0 && records[slugIndex].posterOnly ? openSlug : undefined;
 const nextVol = pad(records.length + 1);
 ---
 
@@ -146,6 +151,7 @@ const nextVol = pad(records.length + 1);
   data-stage
   data-current={current}
   data-open={openIndex >= 0 ? openSlug : undefined}
+  data-show-poster={posterSlug}
   aria-label="Black Cat Vinyl Night archive"
 >
   <div class="wallpaper" aria-hidden="true">
@@ -190,8 +196,13 @@ const nextVol = pad(records.length + 1);
           type="button"
           class:list={['sleeve', { 'is-top': i === current }]}
           data-sleeve={i}
+          data-slug={r.slug}
+          data-label={r.label}
+          data-nav={`${r.longDate} · Vol. ${r.vol}`}
+          data-poster={r.posterOnly ? r.poster?.src : undefined}
+          data-poster-alt={r.posterOnly ? (r.poster?.alt ?? `${r.title} ${r.label} flyer`) : undefined}
           style={`--d:${i};z-index:${records.length - i + 1}`}
-          aria-label={`Open Vinyl Night ${r.label}`}
+          aria-label={r.posterOnly ? `See the flyer for Vinyl Night ${r.label}` : `Open Vinyl Night ${r.label}`}
         >
           <span class="sleeve-disc" aria-hidden="true">
             <span class="disc-label" style={`--accent:${r.palette[2]}`}>
@@ -226,6 +237,7 @@ const nextVol = pad(records.length + 1);
     </div>
 
     {records.map((r, i) => {
+      if (r.posterOnly) return null;
       const isOpen = i === openIndex;
       const photoCount = r.artifacts.length;
       return (
@@ -437,6 +449,14 @@ const nextVol = pad(records.length + 1);
     </div>
   </nav>
 
+  <template data-poster-note>
+    <p class="poster-note">
+      <strong>We weren't collecting the goods back then! SORRY!</strong>
+      <span>All we kept from <span data-poster-label></span> is the flyer. Got photos, or remember what got played?</span>
+      <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer">( DM @blackcat.barbershop ↗ )</a>
+    </p>
+  </template>
+
   <dialog class="lightbox" data-lightbox aria-label="Enlarged artifact">
     <button type="button" class="paren-btn lightbox-close" data-lightbox-close aria-label="Close">(×)</button>
     <figure class="lightbox-figure">
@@ -457,7 +477,10 @@ const nextVol = pad(records.length + 1);
 
   function initVinylNight(stage: HTMLElement) {
     const sleeves = [...stage.querySelectorAll<HTMLElement>('[data-sleeve]')];
-    const folds = [...stage.querySelectorAll<HTMLElement>('[data-gatefold]')];
+    // Only full nights have a gatefold; poster-only sleeves show their flyer instead.
+    const folds = new Map(
+      [...stage.querySelectorAll<HTMLElement>('[data-gatefold]')].map((f) => [Number(f.dataset.gatefold), f] as const),
+    );
     const navLabel = stage.querySelector<HTMLElement>('[data-night-label]')!;
     const primary = stage.querySelector<HTMLButtonElement>('[data-primary]')!;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -505,7 +528,7 @@ const nextVol = pad(records.length + 1);
         sleeve.classList.toggle('is-top', depth === 0);
         sleeve.tabIndex = depth === 0 ? 0 : -1;
       });
-      navLabel.textContent = folds[current].dataset.nav ?? '';
+      navLabel.textContent = sleeves[current].dataset.nav ?? '';
       primary.textContent = openIndex >= 0 ? 'CLOSE' : 'OPEN';
     }
 
@@ -522,8 +545,10 @@ const nextVol = pad(records.length + 1);
 
     function unmount(i: number) {
       window.clearTimeout(timers.get(i));
-      folds[i].classList.remove('is-mounted', 'is-open', 'is-settled', 'is-spilled', 'no-anim');
-      tuckArtifacts(folds[i]);
+      const fold = folds.get(i);
+      if (!fold) return;
+      fold.classList.remove('is-mounted', 'is-open', 'is-settled', 'is-spilled', 'no-anim');
+      tuckArtifacts(fold);
     }
 
     // Dragged artifacts go back to their own spot next time they spill out.
@@ -559,15 +584,19 @@ const nextVol = pad(records.length + 1);
       btn.textContent = video.muted ? '(sound on)' : '(sound off)';
     });
 
-    if (openIndex >= 0) spill(folds[openIndex]);
+    if (openIndex >= 0) spill(folds.get(openIndex)!);
 
     function open(i: number, { push = true, animate = animated() } = {}) {
       if (openIndex === i) return;
       hint?.classList.add('is-used');
+      const fold = folds.get(i);
+      if (!fold) {
+        showPoster(i);
+        return;
+      }
       if (openIndex >= 0) unmount(openIndex);
       unmount(i);
 
-      const fold = folds[i];
       bringToTop(i);
       openIndex = i;
       stage.dataset.open = fold.dataset.slug;
@@ -600,7 +629,7 @@ const nextVol = pad(records.length + 1);
     function close({ push = true } = {}) {
       if (openIndex < 0) return;
       const i = openIndex;
-      const fold = folds[i];
+      const fold = folds.get(i)!;
       openIndex = -1;
       window.clearTimeout(timers.get(i));
 
@@ -637,7 +666,12 @@ const nextVol = pad(records.length + 1);
       hint?.classList.add('is-used');
       const next = (current + dir + total) % total;
       if (openIndex >= 0) {
-        open(next, { animate: false, push: true });
+        if (folds.has(next)) open(next, { animate: false, push: true });
+        else {
+          close();
+          bringToTop(next);
+          renderCrate();
+        }
         return;
       }
       if (flicking) return;
@@ -762,8 +796,8 @@ const nextVol = pad(records.length + 1);
 
     window.addEventListener('popstate', () => {
       const slug = location.pathname.match(/\/vinyl-night\/([^/]+)/)?.[1];
-      const i = folds.findIndex((f) => f.dataset.slug === slug);
-      if (i >= 0) open(i, { push: false, animate: false });
+      const i = sleeves.findIndex((s) => s.dataset.slug === slug);
+      if (i >= 0 && folds.has(i)) open(i, { push: false, animate: false });
       else close({ push: false });
     });
 
@@ -844,6 +878,28 @@ const nextVol = pad(records.length + 1);
       lightbox.showModal();
     }
 
+    const posterNote = stage.querySelector<HTMLTemplateElement>('[data-poster-note]')!;
+
+    function showPoster(i: number) {
+      const sleeve = sleeves[i];
+      if (order[0] !== i) {
+        bringToTop(i);
+        renderCrate();
+      }
+      const note = posterNote.content.cloneNode(true) as DocumentFragment;
+      note.querySelector('[data-poster-label]')!.textContent = sleeve.dataset.label ?? 'that night';
+      if (sleeve.dataset.poster) {
+        const big = new Image();
+        big.src = sleeve.dataset.poster;
+        big.alt = sleeve.dataset.posterAlt ?? '';
+        lightboxMedia.replaceChildren(big);
+      } else {
+        lightboxMedia.replaceChildren();
+      }
+      lightboxCaption.replaceChildren(note);
+      lightbox.showModal();
+    }
+
     lightbox.addEventListener('close', () => {
       lightboxMedia.replaceChildren();
       if (pausedVideo && openIndex >= 0) pausedVideo.play().catch(() => {});
@@ -856,6 +912,8 @@ const nextVol = pad(records.length + 1);
 
     initMenu(stage);
     renderCrate();
+
+    if (stage.dataset.showPoster) showPoster(current);
   }
 
   const MENU_KEY = 'vn-menu-v2';
@@ -2097,6 +2155,24 @@ const nextVol = pad(records.length + 1);
 
   .lightbox-caption :global(a) {
     color: inherit;
+  }
+
+  .lightbox-figure:has(.poster-note) .lightbox-media :global(img) {
+    max-height: calc(100svh - 14rem);
+  }
+
+  .lightbox-caption :global(.poster-note) {
+    display: grid;
+    gap: 0.35rem;
+    max-width: 34rem;
+    margin: 0;
+    padding-top: 0.25rem;
+    line-height: 1.45;
+  }
+
+  .lightbox-caption :global(.poster-note strong) {
+    font-size: 14px;
+    text-transform: uppercase;
   }
 
   .lightbox-close {
